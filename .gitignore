@@ -1,0 +1,34 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Dependency directories
+node_modules/
+.pnp/
+.pnp.js
+
+# Testing
+coverage/
+
+# Production builds
+build/
+dist/
+
+# Environment files
+*.env
+
+
+# OS / IDE specific
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Next.js
+.next/
+
+# Misc
+*.swp
