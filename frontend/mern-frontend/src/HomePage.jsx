@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrash, faPenToSquare } from '@fortawesome/free-solid-svg-icons'
-import { Link } from 'react-router-dom'
+import { Link, Navigate, useNavigate } from 'react-router-dom'
 import axios from "axios"
 import "./index.css"
 import _ from "lodash"
-const HomePage = ({notes,setNotes}) => {
-
+const HomePage = ({notes,setNotes,EditIdtoParent}) => {
+    const navigate=useNavigate();
     useEffect(()=>{
         const fetchNotes= async()=>{
             try {
@@ -22,9 +22,12 @@ const HomePage = ({notes,setNotes}) => {
     },[])
     const handleDelete=(id)=>{
        setNotes((prev)=>_.filter(prev,(note)=>note._id!==id))
-       const res= axios.delete("http://localhost:5000/api/notes/:id")
-       
+       const res= axios.delete("http://localhost:5000/api/notes/:id")     
     }
+     const handleEdit=(id)=>{
+         EditIdtoParent(id)
+         navigate("/editPage")
+     }
   return (
     <div>
      <nav className='Navbar'>
@@ -40,7 +43,7 @@ const HomePage = ({notes,setNotes}) => {
                 <div className='allnotesinnerDiv' key={note._id}>
                 <h1>{note.title}</h1> <p>{note.content}</p>
                 <FontAwesomeIcon icon={faTrash} className='deleteIcon' onClick={()=>handleDelete(note._id) } />
-                 <FontAwesomeIcon className='editIcon' icon={faPenToSquare}/>
+                <FontAwesomeIcon className='editIcon' icon={faPenToSquare} onClick={()=>handleEdit(note._id)}/>
                 </div>
               ))
             ):<p>There is no note yet</p> }
